@@ -7,7 +7,7 @@ import semverSatisfies from 'semver/functions/satisfies'
 import { LATEST_SAFE_VERSION } from '@/config/constants'
 
 /** This version is used if a network does not have the LATEST_SAFE_VERSION deployed yet */
-const FALLBACK_SAFE_VERSION = '1.3.0' as const
+const FALLBACK_SAFE_VERSION = '1.4.1' as const
 
 export enum FEATURES {
   ERC721 = 'ERC721',
