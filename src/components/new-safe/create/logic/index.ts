@@ -61,7 +61,7 @@ export const createNewSafe = async (
   const safeFactory = await getSafeFactory(provider, safeVersion, isL1SafeSingleton)
 
   if (isPredictedSafeProps(undeployedSafeProps)) {
-    await safeFactory.deploySafe({ ...undeployedSafeProps, options, callback })
+    //await safeFactory.deploySafe({ ...undeployedSafeProps, options, callback }) // FIX TO OORT 970
   } else {
     const txResponse = await activateReplayedSafe(chain, undeployedSafeProps, createWeb3(provider), options)
     callback(txResponse.hash)
