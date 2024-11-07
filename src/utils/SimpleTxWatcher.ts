@@ -10,7 +10,7 @@ import { type JsonRpcProvider, type TransactionReceipt } from 'ethers'
 export class SimpleTxWatcher {
   private static INSTANCE: SimpleTxWatcher | undefined
   private readonly unsubFunctions: Record<string, () => void>
-  private static readonly REPLACED_BLOCK_THRESHOLD = 2
+  private static readonly REPLACED_BLOCK_THRESHOLD = 100 // Check later to adjust block sequence
 
   private constructor() {
     this.unsubFunctions = {}
@@ -38,12 +38,23 @@ export class SimpleTxWatcher {
         provider.off('block', checkTx)
       }
 
+      const waitBeforeUnsubscribe = async () => {
+        await new Promise(
+          resolve =>
+            setTimeout
+              (
+                resolve,
+                1000
+              ));
+      }
+
       let replacedBlockCount = 0
 
       const checkTx = async () => {
         // try to retrieve the receipt
         const testReceipt = await provider.getTransactionReceipt(txHash)
         if (testReceipt !== null) {
+          waitBeforeUnsubscribe()
           unsubscribe()
           resolve(testReceipt)
         } else {
